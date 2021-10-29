@@ -136,6 +136,26 @@ namespace _4_9_prva
             SqlDataAdapter adapter = new SqlDataAdapter("select id, ime, prezime,ocena from ucenik order by id", veza);
             ucenik1.Clear();
             adapter.Fill(ucenik1);
+            if (red>ucenik1.Rows.Count-1)
+            {
+                red = ucenik1.Rows.Count - 1;
+            }
+            Funkcija();
+        }
+
+        private void btn_izmeni_Click(object sender, EventArgs e)
+        {
+            string pomocni = "update ucenik set ime='" + txt_ime.Text + "',prezime='" + txt_prezime.Text + "', ocena=" + txt_ocena.Text + "where id=" + txt_id.Text ;
+
+            SqlConnection veza = new SqlConnection(conectionstring);
+            SqlCommand naredba = new SqlCommand(pomocni, veza);
+
+            veza.Open();
+            naredba.ExecuteNonQuery();
+            veza.Close();
+            SqlDataAdapter adapter = new SqlDataAdapter("select id, ime, prezime,ocena from ucenik order by id", veza);
+            ucenik1.Clear();
+            adapter.Fill(ucenik1);
             Funkcija();
         }
     }
